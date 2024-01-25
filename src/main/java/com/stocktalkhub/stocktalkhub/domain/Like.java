@@ -1,9 +1,6 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +10,10 @@ import java.time.LocalDateTime;
 @Table(name = "comments")
 @Getter @Setter
 public class Like {
+    @Id
+    @GeneratedValue
+    @Column(name = "like_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn
