@@ -1,44 +1,71 @@
 package com.stocktalkhub.stocktalkhub.controller;
 
+import com.stocktalkhub.stocktalkhub.domain.Member;
 import com.stocktalkhub.stocktalkhub.dto.MemberDTO;
+import com.stocktalkhub.stocktalkhub.dto.TokenDTO;
+import com.stocktalkhub.stocktalkhub.security.jwt.util.JwtTokenizer;
+import com.stocktalkhub.stocktalkhub.security.jwt.util.User;
+import com.stocktalkhub.stocktalkhub.service.JwtTokenService;
 import com.stocktalkhub.stocktalkhub.service.MemberService;
+import com.stocktalkhub.stocktalkhub.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
 public class MemberApiController {
 
     private final MemberService memberService;
+    private final JwtTokenizer jwtTokenizer;
+    private final JwtTokenService jwtTokenService;
+    private final RedisService redisService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @GetMapping({"", "/"})
-    public String index() {
-        // 머스테치 기본폴더 src/main/resources/
-        // 뷰리졸버 설정 : templates (prefix), .mustache (suffix) 의존성에 추가됐다면 자동으로 설정됨 생략가능
-        return "index"; // src/main/resources/templates/index.mustache
+
+    @PostMapping("members/login")
+    public ResponseEntity login(@RequestBody MemberDTO member) {
+
+        try {
+            Member EntityMember = memberService.findByEmail(member.getEmail());
+            memberService.login(member.getPassword(), EntityMember.getPassword());
+
+            String accessToken = jwtTokenizer.createAccessToken(EntityMember.getId(), EntityMember.getEmail());
+            String refreshToken = jwtTokenizer.createRefreshToken(EntityMember.getId(), EntityMember.getEmail());
+            jwtTokenService.saveTokenRedis(accessToken, refreshToken, EntityMember);
+
+            TokenDTO loginResponse = TokenDTO.builder()
+                    .memberId(EntityMember.getId())
+                    .email(EntityMember.getEmail())
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "로그인에 성공하였습니다.");
+            response.put("loginResponse", loginResponse);
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (MemberService.EmailNotExistsException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+
+        } catch (MemberService.PasswordMismatchException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+//        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping("user")
-    public @ResponseBody String user(){
-        return "admin";
-    }
-
-    @GetMapping("manager")
-    public @ResponseBody String manager(){
-        return "manager";
-    }
-
-    @PostMapping("/login")
-    public String loginForm(@RequestBody MemberDTO member) {
-        return member.toString();
-    }
-
-    @PostMapping("/emailCheck")
+    @PostMapping("members/emailCheck")
     public ResponseEntity<String> emailCheck(@RequestBody MemberDTO member) {
         try{
             memberService.sendCodeToEmail(member);
@@ -55,9 +82,8 @@ public class MemberApiController {
         }
     }
 
-    @PostMapping("/join")
+    @PostMapping("members/join")
     public ResponseEntity<String> join(@RequestBody MemberDTO member){
-        System.out.println(member);
 
         try {
             Long id = memberService.join(member);
@@ -78,10 +104,30 @@ public class MemberApiController {
 //            이미 존재하는 이메일 처리
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 이메일입니다.");
         }
-
-
     }
 
+    // 로그아웃
+    @PostMapping("members/logouts")
+    public ResponseEntity logout(@AuthenticationPrincipal User user, @RequestBody TokenDTO tokenDTO){
+
+        jwtTokenService.deleteRefreshToken(user);
+
+        return ResponseEntity.ok("로그아웃에 성공하였습니다.");
+    }
+
+
+    // 업데이트
+    @PostMapping("members/{id}")
+    public ResponseEntity update(@AuthenticationPrincipal User user, @RequestBody MemberDTO member,
+                                 @PathVariable Long id){
+        if (user.getId() != id){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유저가 일치하지 않습니다.");
+        }
+
+        memberService.MemberInfoUpdate(id, member);
+
+        return ResponseEntity.ok("업데이트에 성공하였습니다.");
+    }
 
 
 
