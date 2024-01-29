@@ -2,6 +2,7 @@ package com.stocktalkhub.stocktalkhub.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "posts")
 @Getter
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue

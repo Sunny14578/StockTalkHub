@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,4 +25,10 @@ public class PostsRepository {
         query.setParameter("id", id);
         return query.getResultList();
     }
+
+    public Optional<Post> findOne(Long id) {
+        Post post = em.find(Post.class, id);
+        return Optional.ofNullable(post);
+    }
+
 }

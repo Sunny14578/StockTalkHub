@@ -1,13 +1,12 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import javax.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comments")
+@Table(name = "likes")
 @Getter
 public class Like {
     @Id
@@ -15,13 +14,17 @@ public class Like {
     @Column(name = "like_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Member member_id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Post post_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Comment comment_id;
 
     private LocalDateTime created_at;
     private LocalDateTime deleted_at;
