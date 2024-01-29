@@ -1,12 +1,12 @@
 package com.stocktalkhub.stocktalkhub.repository;
 
 import com.stocktalkhub.stocktalkhub.domain.Member;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,8 +19,9 @@ public class MemberRepository {
         System.out.print("성공");
     }
 
-    public Member findOne(Long id) {
-        return em.find(Member.class, id);
+    public Optional<Member> findOne(Long id) {
+        Member member = em.find(Member.class, id);
+        return Optional.ofNullable(member);
     }
 
     public Member findByEmail(String email){
