@@ -15,16 +15,16 @@ public class Like {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Member member_id;
+    @JoinColumn(name = "member_id")
+    private Member memberId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Post post_id;
+    @JoinColumn(name = "post_id")
+    private Post postId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Comment comment_id;
+    @JoinColumn(name = "comment_id")
+    private Comment commentId;
 
     private LocalDateTime created_at;
     private LocalDateTime deleted_at;

@@ -45,13 +45,13 @@ public class Member {
     @OneToMany(mappedBy = "following")
     private List<Follow> followers;
 
-    @OneToMany(mappedBy = "member_id")
+    @OneToMany(mappedBy = "memberId")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member_id")
+    @OneToMany(mappedBy = "memberId")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member_id")
+    @OneToMany(mappedBy = "memberId")
     private List<Like> likes = new ArrayList<>();
 
     @Builder

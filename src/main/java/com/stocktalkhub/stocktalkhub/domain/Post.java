@@ -20,8 +20,8 @@ public class Post {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Member member_id;
+    @JoinColumn(name = "member_id")
+    private Member memberId;
 
     private String content;
     private String media_file;
@@ -29,15 +29,15 @@ public class Post {
     private LocalDateTime deleted_at;
     private LocalDateTime updated_at;
 
-    @OneToMany(mappedBy = "post_id")
+    @OneToMany(mappedBy = "postId")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post_id")
+    @OneToMany(mappedBy = "postId")
     private List<Like> likes = new ArrayList<>();
 
     @Builder
     public Post(Member member_id, String content, LocalDateTime created_at) {
-        this.member_id = member_id;
+        this.memberId = member_id;
         this.content = content;
         this.created_at = created_at;
     }
