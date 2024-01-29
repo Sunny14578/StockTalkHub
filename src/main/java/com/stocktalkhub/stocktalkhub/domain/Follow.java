@@ -1,8 +1,8 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import javax.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "follows")
@@ -12,12 +12,12 @@ public class Follow {
     @Column(name = "follow_id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "follower_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member follower;
 
-    @ManyToOne
-    @JoinColumn(name = "following_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private Member following;
 
 
