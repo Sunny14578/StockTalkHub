@@ -2,13 +2,21 @@ package com.stocktalkhub.stocktalkhub.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class TokenDTO {
-    private final String grantType;
-    private final String authorizationType;
-    private final String accessToken;
-    private final String refreshToken;
-    private final Long accessTokenExpiresIn;
+    private Long memberId;
+    private String email;
+    private String accessToken;
+    private String refreshToken;
+
+    @Builder
+    public TokenDTO(Long memberId, String email, String accessToken, String refreshToken) {
+        this.memberId = memberId;
+        this.email = email;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
 }

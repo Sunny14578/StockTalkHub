@@ -1,6 +1,6 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
-@Getter @Setter
+@Getter
 public class Comment {
     @Id @GeneratedValue
     @Column(name = "comment_id")

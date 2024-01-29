@@ -1,9 +1,6 @@
 package com.stocktalkhub.stocktalkhub.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @ToString
@@ -15,4 +12,13 @@ public class MemberDTO {
     private String auth;
     private String profile_image;
     private String introduce;
+    private String name;
+
+    @Builder
+    public MemberDTO(String password, String introduce, String profile_image, String name) {
+        this.password = password;
+        this.introduce = introduce;
+        this.profile_image = profile_image;
+        this.name = name;
+    }
 }

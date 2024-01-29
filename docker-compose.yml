@@ -1,4 +1,4 @@
-version: '1'
+version: '2'
 services:
   postgres:
     image: 'postgres:latest'
@@ -9,3 +9,8 @@ services:
       - 'POSTGRES_PASSWORD=mypassword'
     ports:
       - '5432:5432'
+  redis:
+    image: 'redis:latest'
+    container_name: 'my_redis'
+    ports:
+      - '6379:6379'

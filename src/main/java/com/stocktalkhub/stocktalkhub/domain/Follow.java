@@ -1,12 +1,12 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "follows")
-@Getter @Setter
+@Getter
 public class Follow {
     @Id @GeneratedValue
     @Column(name = "follow_id")

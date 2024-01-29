@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.2.2'
-	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.springframework.boot' version '2.7.13'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
 group = 'com.stocktalkhub'
@@ -29,6 +29,20 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+	implementation 'javax.mail:javax.mail-api:1.6.2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	testImplementation 'org.awaitility:awaitility:4.1.1'
+	implementation 'com.google.code.gson:gson:2.8.8' // Gson 버전
+
+	implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+
+	// jwts
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 }
 
 tasks.named('test') {
