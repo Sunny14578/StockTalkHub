@@ -1,5 +1,6 @@
 package com.stocktalkhub.stocktalkhub.service;
 
+import com.stocktalkhub.stocktalkhub.security.jwt.util.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
@@ -17,6 +18,9 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
+    private final JwtTokenizer jwtTokenizer;
+
+
 
     public void setValues(String key, String data) {
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
@@ -30,10 +34,9 @@ public class RedisService {
 
     @Transactional(readOnly = true)
     public String getValues(String key) {
+        System.out.print(key + "키값");
         ValueOperations<String, Object> values = redisTemplate.opsForValue();
-        if (values.get(key) == null) {
-            return "false";
-        }
+
         return (String) values.get(key);
     }
 
