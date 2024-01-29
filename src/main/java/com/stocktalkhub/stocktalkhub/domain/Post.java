@@ -1,9 +1,9 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import javax.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Member member_id;
 
@@ -32,4 +32,12 @@ public class Post {
 
     @OneToMany(mappedBy = "post_id")
     private List<Like> likes = new ArrayList<>();
+
+    @Builder
+    public Post(Member member_id, String content, LocalDateTime created_at) {
+        this.member_id = member_id;
+        this.content = content;
+        this.created_at = created_at;
+    }
+
 }
