@@ -1,5 +1,6 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class Follow {
     @JoinColumn
     private Member following;
 
-
-
+    @Builder
+    public Follow(Member follower, Member following) {
+        this.follower = follower;
+        this.following = following;
+    }
 }

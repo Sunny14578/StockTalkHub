@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenFilter jwtTokenFilter;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -28,9 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/members/join", "/members/login",
-                        "/posts/**", "/comments/**").permitAll()
-//                .antMatchers().permitAll()
-//                .antMatchers("/emailCheck").permitAll()
+                        "/posts/**", "/comments/**", "/members/emailCheck").permitAll()
+
+//                .requestMatchers(AUTH_WHITELIST).permitAll()
+//                .antMatchers("/members/emailCheck").permitAll()
 //                .antMatchers("/logout/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
