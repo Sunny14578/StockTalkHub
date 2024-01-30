@@ -23,19 +23,20 @@ public class CommentsService {
     private final PostsRepository postsRepository;
     private final CommentsRepository commentsRepository;
     public void createComments(Long id, CommentDTO comments) {
-        System.out.println("=========");
+
         Member member = memberRepository.findOne(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
-        System.out.println("--------");
-        Post post = postsRepository.findOne(id).orElseThrow(() ->
+
+        Post post = postsRepository.findOne(comments.getPost_id()).orElseThrow(() ->
                 new IllegalArgumentException("해당 포스트가 존재하지 않습니다."));
-        System.out.println("==========");
+
         Comment entityComments = Comment.builder()
                 .member_id(member)
                 .post_id(post)
                 .content(comments.getContent())
                 .created_at(LocalDateTime.now())
                 .build();
+        System.out.println(entityComments.getPostId() + "sdfdsfsd");
 
         commentsRepository.save(entityComments);
     }

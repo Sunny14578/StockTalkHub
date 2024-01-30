@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -13,5 +14,10 @@ public class CommentsRepository {
     public void save(Comment comments){
         em.persist(comments);
         System.out.print("성공");
+    }
+
+    public Optional<Comment> findOne(Long id) {
+        Comment comment = em.find(Comment.class, id);
+        return Optional.ofNullable(comment);
     }
 }

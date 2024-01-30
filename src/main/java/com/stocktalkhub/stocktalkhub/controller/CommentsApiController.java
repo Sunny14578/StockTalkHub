@@ -18,7 +18,7 @@ public class CommentsApiController {
     private final CommentsService commentsService;
     @PostMapping("comments/{id}")
     public ResponseEntity commentsCreate(@PathVariable Long id, @RequestBody CommentDTO comments) {
-        System.out.printf(id + " " + comments);
+        System.out.println(id + " " + comments);
         commentsService.createComments(id, comments);
 
         return ResponseEntity.status(HttpStatus.OK).body("댓글 생성 완료");

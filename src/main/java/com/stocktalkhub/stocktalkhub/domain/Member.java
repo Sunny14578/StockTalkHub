@@ -45,14 +45,14 @@ public class Member {
     @OneToMany(mappedBy = "following")
     private List<Follow> followers;
 
-    @OneToMany(mappedBy = "member_id")
+    @OneToMany(mappedBy = "memberId")
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member_id")
+    @OneToMany(mappedBy = "memberId")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member_id")
-    private List<Like> likes = new ArrayList<>();
+    @OneToMany(mappedBy = "memberId")
+    private List<PostLike> likes = new ArrayList<>();
 
     @Builder
     public Member(String password, String email, boolean is_verified, String introduce, String profile_image, String name) {

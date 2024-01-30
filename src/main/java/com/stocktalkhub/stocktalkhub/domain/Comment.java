@@ -18,28 +18,29 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
 
+
     private String content;
     private LocalDateTime created_at;
     private LocalDateTime deleted_at;
     private LocalDateTime updated_at;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Member member_id;
+    @JoinColumn(name = "member_id")
+    private Member memberId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Post post_id;
+    @JoinColumn(name = "post_id")
+    private Post postId;
 
-    @OneToMany(mappedBy = "comment_id")
-    private List<Like> Likes = new ArrayList<>();
+    @OneToMany(mappedBy = "commentId")
+    private List<CommentLike> Likes = new ArrayList<>();
 
 
 
     @Builder
     public Comment(Member member_id, Post post_id, String content, LocalDateTime created_at) {
-        this.member_id = member_id;
-        this.post_id = post_id;
+        this.memberId = member_id;
+        this.postId = post_id;
         this.content = content;
         this.created_at = created_at;
     }
