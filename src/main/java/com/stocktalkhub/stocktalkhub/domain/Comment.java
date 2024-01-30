@@ -33,7 +33,7 @@ public class Comment {
     private Post postId;
 
     @OneToMany(mappedBy = "commentId")
-    private List<Like> Likes = new ArrayList<>();
+    private List<CommentLike> Likes = new ArrayList<>();
 
 
 

@@ -52,7 +52,7 @@ public class Member {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberId")
-    private List<Like> likes = new ArrayList<>();
+    private List<PostLike> likes = new ArrayList<>();
 
     @Builder
     public Member(String password, String email, boolean is_verified, String introduce, String profile_image, String name) {

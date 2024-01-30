@@ -33,7 +33,7 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "postId")
-    private List<Like> likes = new ArrayList<>();
+    private List<PostLike> likes = new ArrayList<>();
 
     @Builder
     public Post(Member member_id, String content, LocalDateTime created_at) {
