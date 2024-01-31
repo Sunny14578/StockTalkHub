@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -17,33 +15,29 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue
-    @Column(name = "post_id")
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member memberId;
+    @Column(name = "member_id")
+    private Long memberId;
 
+    @Column(name = "content")
     private String content;
-    private String media_file;
-    private LocalDateTime created_at;
-    private LocalDateTime deleted_at;
-    private LocalDateTime updated_at;
 
-    @OneToMany(mappedBy = "postId")
-    private List<Comment> comments = new ArrayList<>();
+    @Column(name = "media_file")
+    private String mediaFile;
 
-    @OneToMany(mappedBy = "postId")
-    private List<PostLike> likes = new ArrayList<>();
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post")
-    private List<NewsFeed> newsFeeds = new ArrayList<>();
+//    private LocalDateTime deleted_at;
+//    private LocalDateTime updated_at;
 
     @Builder
-    public Post(Member member_id, String content, LocalDateTime created_at) {
-        this.memberId = member_id;
+    public Post(Long memberId, String content, LocalDateTime createdAt) {
+        this.memberId = memberId;
         this.content = content;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 
 }

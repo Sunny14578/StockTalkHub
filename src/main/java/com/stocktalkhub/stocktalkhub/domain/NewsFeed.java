@@ -1,8 +1,6 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,59 +16,46 @@ public class NewsFeed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @Column(name = "post_id")
+    private Long postId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    @Column(name = "comment_id")
+    private Long commentId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postLike_id")
-    private PostLike postLike;
+    @Column(name = "postLike_id")
+    private Long postLikeId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "commentLike_id")
-    private CommentLike commentLike;
+    @Column(name = "commentLike_id")
+    private Long commentLikeId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follow_id")
-    private Follow follow;
+    @Column(name = "follow_id")
+    private Long followId;
 
     @Enumerated(EnumType.STRING)
     private NewsFeedType type;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private Member sender;
+    @Column(name = "sender_id")
+    private Long senderId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id")
-    private Member receiver;
+    @Column(name = "receiver_id")
+    private Long receiverId;
 
     private LocalDateTime timestamp;
 
-    @Builder
-    public NewsFeed(Post post, Comment comment,
-                    PostLike postLike, CommentLike commentLike,
-                    Follow follow, NewsFeedType type, Member sender,
-                    Member receiver, LocalDateTime timestamp) {
-        this.post = post;
-        this.comment = comment;
-        this.postLike = postLike;
-        this.commentLike = commentLike;
-        this.follow = follow;
+    public NewsFeed(Long postId, Long commentId,
+                    Long postLikeId, Long commentLikeId,
+                    Long followId, NewsFeedType type,
+                    Long senderId, Long receiverId,
+                    LocalDateTime timestamp) {
+        this.postId = postId;
+        this.commentId = commentId;
+        this.postLikeId = postLikeId;
+        this.commentLikeId = commentLikeId;
+        this.followId = followId;
         this.type = type;
-        this.sender = sender;
-        this.receiver = receiver;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.timestamp = timestamp;
     }
 }
+

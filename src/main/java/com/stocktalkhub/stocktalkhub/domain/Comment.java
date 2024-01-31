@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "comments")
@@ -16,36 +14,29 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Id @GeneratedValue
-    @Column(name = "comment_id")
+    @Column(name = "id")
     private Long id;
 
-
+    @Column(name = "content")
     private String content;
-    private LocalDateTime created_at;
-    private LocalDateTime deleted_at;
-    private LocalDateTime updated_at;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member memberId;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post postId;
+//    private LocalDateTime deleted_at;
+//    private LocalDateTime updated_at;
 
-    @OneToMany(mappedBy = "commentId")
-    private List<CommentLike> Likes = new ArrayList<>();
+    @Column(name = "member_id")
+    private Long memberId;
 
-    @OneToMany(mappedBy = "comment")
-    private List<NewsFeed> newsFeeds = new ArrayList<>();
-
-
+    @Column(name = "post_id")
+    private Long postId;
 
     @Builder
-    public Comment(Member member_id, Post post_id, String content, LocalDateTime created_at) {
-        this.memberId = member_id;
+    public Comment(Long memberId, Long post_id, String content, LocalDateTime createdAt) {
+        this.memberId = memberId;
         this.postId = post_id;
         this.content = content;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 }

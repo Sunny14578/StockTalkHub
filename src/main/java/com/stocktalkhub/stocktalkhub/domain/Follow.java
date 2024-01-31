@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "follows")
@@ -15,23 +13,18 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Follow {
     @Id @GeneratedValue
-    @Column(name = "follow_id")
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Member follower;
+    @Column(name = "follower_id")
+    private Long followerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Member following;
-
-    @OneToMany(mappedBy = "follow")
-    private List<NewsFeed> sentNewsFeeds = new ArrayList<>();
+    @Column(name = "following_id")
+    private Long followingId;
 
     @Builder
-    public Follow(Member follower, Member following) {
-        this.follower = follower;
-        this.following = following;
+    public Follow(Long followerId, Long followingId) {
+        this.followerId = followerId;
+        this.followingId = followingId;
     }
 }
