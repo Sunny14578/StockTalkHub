@@ -1,5 +1,6 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "Members")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -34,7 +35,6 @@ public class Member {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean is_verified;
 
-
     private LocalDateTime created_at;
     private LocalDateTime deleted_at;
     private LocalDateTime updated_at;
@@ -53,6 +53,12 @@ public class Member {
 
     @OneToMany(mappedBy = "memberId")
     private List<PostLike> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender")
+    private List<NewsFeed> sentNewsFeeds = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receiver")
+    private List<NewsFeed> receivedNewsFeeds = new ArrayList<>();
 
     @Builder
     public Member(String password, String email, boolean is_verified, String introduce, String profile_image, String name) {

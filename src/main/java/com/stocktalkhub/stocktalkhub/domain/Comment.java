@@ -1,5 +1,6 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "comments")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Id @GeneratedValue
     @Column(name = "comment_id")
@@ -34,6 +35,9 @@ public class Comment {
 
     @OneToMany(mappedBy = "commentId")
     private List<CommentLike> Likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "comment")
+    private List<NewsFeed> newsFeeds = new ArrayList<>();
 
 
 

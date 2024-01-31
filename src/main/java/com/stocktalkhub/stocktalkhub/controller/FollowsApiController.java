@@ -1,5 +1,6 @@
 package com.stocktalkhub.stocktalkhub.controller;
 
+import com.stocktalkhub.stocktalkhub.domain.Post;
 import com.stocktalkhub.stocktalkhub.security.jwt.util.User;
 import com.stocktalkhub.stocktalkhub.service.FollowsService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -29,7 +32,9 @@ public class FollowsApiController {
 
     @GetMapping("follows/{id}/posts")
     public ResponseEntity followsGetPost(@AuthenticationPrincipal User user, @PathVariable Long id){
-        followsService.FollowsPostGet(id);
-        return ResponseEntity.status(HttpStatus.OK).body("팔로우 포스트 불러오기 성공");
+
+        List<Post> posts = followsService.FollowsPostGet(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
     }
 }
