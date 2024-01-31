@@ -17,6 +17,7 @@ public class LikesService {
     private final MemberRepository memberRepository;
     private final PostsRepository postsRepository;
     private final CommentsRepository commentsRepository;
+    private final NewsFeedRepository newsFeedRepository;
     public void postLikesCreate(Long accessId, Long postId) {
 
         Member member = memberRepository.findOne(accessId).orElseThrow(() ->
@@ -32,8 +33,16 @@ public class LikesService {
                 .created_at(LocalDateTime.now())
                 .build();
 
+        NewsFeed entityNewsFeed = NewsFeed.builder()
+                .type(NewsFeedType.POSTLIKE)
+                .postLike(EntityPostLike)
+                .timestamp(LocalDateTime.now())
+                .sender(member)
+                .receiver(post.getMemberId())
+                .build();
 
         postLikesRepository.save(EntityPostLike);
+        newsFeedRepository.save(entityNewsFeed);
     }
 
     public void commentsLikesCreate(Long accessId, Long postId) {
@@ -51,6 +60,16 @@ public class LikesService {
                 .created_at(LocalDateTime.now())
                 .build();
 
+        NewsFeed entityNewsFeed = NewsFeed.builder()
+                .type(NewsFeedType.COMMENTLIKE)
+                .commentLike(EntityCommentike)
+                .timestamp(LocalDateTime.now())
+                .sender(member)
+                .receiver(comment.getMemberId())
+                .build();
+
         commentsLikesRepository.save(EntityCommentike);
+        newsFeedRepository.save(entityNewsFeed);
+
     }
 }

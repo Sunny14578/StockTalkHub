@@ -1,7 +1,6 @@
 package com.stocktalkhub.stocktalkhub.controller;
 
 import com.stocktalkhub.stocktalkhub.dto.PostsDTO;
-import com.stocktalkhub.stocktalkhub.service.MemberService;
 import com.stocktalkhub.stocktalkhub.service.PostsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostsApiController {
 
-    private final MemberService memberService;
     private final PostsService postsService;
 
     @PostMapping("posts/{id}")

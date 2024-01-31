@@ -14,11 +14,11 @@ public class PostsDTO {
     private String media_file;
     private LocalDateTime created_at;
 
-//    @Builder
-//    public PostsDTO(Long member_id, String content, LocalDateTime created_at) {
-//        this.member_id = member_id;
-//        this.content = content;
-//        this.created_at = created_at;
-//    }
+    @Builder
+    private PostsDTO(Long member_id, String content, LocalDateTime created_at) {
+        this.member_id = member_id;
+        this.content = content;
+        this.created_at = created_at;
+    }
 
 }

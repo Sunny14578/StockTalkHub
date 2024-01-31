@@ -1,14 +1,19 @@
 package com.stocktalkhub.stocktalkhub.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "CommentLikes")
+@Table(name = "commentLikes")
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentLike {
     @Id
     @GeneratedValue
@@ -22,6 +27,9 @@ public class CommentLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment commentId;
+
+    @OneToMany(mappedBy = "commentLike")
+    private List<NewsFeed> newsFeeds = new ArrayList<>();
 
     private LocalDateTime created_at;
     private LocalDateTime deleted_at;
