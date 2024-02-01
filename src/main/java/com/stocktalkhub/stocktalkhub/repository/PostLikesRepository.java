@@ -11,8 +11,9 @@ import javax.persistence.EntityManager;
 public class PostLikesRepository {
 
     private final EntityManager em;
-    public void save(PostLike postLike){
+    public PostLike save(PostLike postLike){
         em.persist(postLike);
         System.out.print("성공");
+        return postLike;
     }
 }

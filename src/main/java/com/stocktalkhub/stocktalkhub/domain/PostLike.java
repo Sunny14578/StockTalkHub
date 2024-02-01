@@ -14,15 +14,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostLike {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "post_id")
-    private Long postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -30,9 +31,9 @@ public class PostLike {
 //    private LocalDateTime updated_at;
 
     @Builder
-    public PostLike(Long memberId, Long postId, LocalDateTime createdAt) {
+    public PostLike(Long memberId, Post post, LocalDateTime createdAt) {
         this.memberId = memberId;
-        this.postId = postId;
+        this.post = post;
         this.createdAt = createdAt;
     }
 }

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -29,6 +29,7 @@ public class Post {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
 
 //    private LocalDateTime deleted_at;
 //    private LocalDateTime updated_at;

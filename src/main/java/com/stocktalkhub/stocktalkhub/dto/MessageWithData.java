@@ -1,5 +1,7 @@
 package com.stocktalkhub.stocktalkhub.dto;
 
+import com.stocktalkhub.stocktalkhub.dto.CommentDTO.CommentDTO;
+import com.stocktalkhub.stocktalkhub.dto.PostDTO.PostsDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

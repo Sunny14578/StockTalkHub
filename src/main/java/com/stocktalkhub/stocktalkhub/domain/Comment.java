@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -29,13 +29,14 @@ public class Comment {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "post_id")
-    private Long postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @Builder
-    public Comment(Long memberId, Long post_id, String content, LocalDateTime createdAt) {
+    public Comment(Long memberId, Post post, String content, LocalDateTime createdAt) {
         this.memberId = memberId;
-        this.postId = post_id;
+        this.post = post;
         this.content = content;
         this.createdAt = createdAt;
     }

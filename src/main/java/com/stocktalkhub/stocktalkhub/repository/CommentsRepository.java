@@ -11,9 +11,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommentsRepository {
     private final EntityManager em;
-    public void save(Comment comments){
+    public Comment save(Comment comments){
         em.persist(comments);
-        System.out.print("성공");
+        return comments;
     }
 
     public Optional<Comment> findOne(Long id) {

@@ -14,9 +14,10 @@ import java.util.Optional;
 public class FollowsRepository {
     private final EntityManager em;
 
-    public void save(Follow Follows){
-        em.persist(Follows);
+    public Follow save(Follow follows){
+        em.persist(follows);
         System.out.print("성공");
+        return follows;
     }
 
     public Optional<List<Long>> findFollowing(Long followerId) {

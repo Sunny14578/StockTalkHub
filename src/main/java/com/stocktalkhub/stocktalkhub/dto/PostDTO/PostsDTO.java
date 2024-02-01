@@ -1,4 +1,4 @@
-package com.stocktalkhub.stocktalkhub.dto;
+package com.stocktalkhub.stocktalkhub.dto.PostDTO;
 
 import lombok.*;
 

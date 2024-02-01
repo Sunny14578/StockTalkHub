@@ -1,6 +1,5 @@
 package com.stocktalkhub.stocktalkhub.repository;
 
-import com.stocktalkhub.stocktalkhub.domain.Member;
 import com.stocktalkhub.stocktalkhub.domain.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -15,9 +14,10 @@ import java.util.Optional;
 public class PostsRepository {
 
     private final EntityManager em;
-    public void save(Post post){
+    public Post save(Post post){
         em.persist(post);
         System.out.print("성공");
+        return post;
     }
 
     public List<Post> getPostsById(Long id) {
@@ -32,13 +32,11 @@ public class PostsRepository {
         return Optional.ofNullable(post);
     }
 
-    public List<Post> getFollowsPosts(Member member) {
+    public List<Post> getFollowsPosts(Long memberId) {
         String jpql = "SELECT p FROM Post p " +
-//                                "JOIN p.memberId m " +
-//                                "JOIN m.following f " +
-                                "WHERE f.id = :memberId";
+                                "WHERE p.memberId = :memberId";
         TypedQuery<Post> query = em.createQuery(jpql, Post.class);
-        query.setParameter("memberId", member.getId());
+        query.setParameter("memberId", memberId);
         return query.getResultList();
     }
 }

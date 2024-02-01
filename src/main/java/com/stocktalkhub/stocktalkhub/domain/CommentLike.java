@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "commentLikes")
@@ -16,29 +14,26 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentLike {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "like_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member memberId;
+    @Column(name = "member_id")
+    private Long memberId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
-    private Comment commentId;
+    private Comment comment;
 
-    @OneToMany(mappedBy = "commentLike")
-    private List<NewsFeed> newsFeeds = new ArrayList<>();
-
-    private LocalDateTime created_at;
-    private LocalDateTime deleted_at;
-    private LocalDateTime updated_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+//    private LocalDateTime deleted_at;
+//    private LocalDateTime updated_at;
 
     @Builder
-    public CommentLike(Member memberId, Comment commentId, LocalDateTime created_at) {
+    public CommentLike(Long memberId, Comment comment, LocalDateTime createdAt) {
         this.memberId = memberId;
-        this.commentId = commentId;
-        this.created_at = created_at;
+        this.comment = comment;
+        this.createdAt = createdAt;
     }
 }

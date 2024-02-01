@@ -1,10 +1,7 @@
 package com.stocktalkhub.stocktalkhub.service;
 
-import com.stocktalkhub.stocktalkhub.domain.Member;
-import com.stocktalkhub.stocktalkhub.domain.NewsFeed;
-import com.stocktalkhub.stocktalkhub.domain.NewsFeedType;
 import com.stocktalkhub.stocktalkhub.domain.Post;
-import com.stocktalkhub.stocktalkhub.dto.PostsDTO;
+import com.stocktalkhub.stocktalkhub.dto.PostDTO.PostsDTO;
 import com.stocktalkhub.stocktalkhub.repository.MemberRepository;
 import com.stocktalkhub.stocktalkhub.repository.NewsFeedRepository;
 import com.stocktalkhub.stocktalkhub.repository.PostsRepository;
@@ -25,27 +22,19 @@ public class PostsService {
     private final NewsFeedRepository newsFeedRepository;
 
     @Transactional
-    public void createPosts(Long id, PostsDTO posts) {
+    public Post createPosts(Long id, PostsDTO posts) {
 
-        Member member = memberRepository.findOne(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
+//        Member member = memberRepository.findOne(id).orElseThrow(() ->
+//                new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
 
         LocalDateTime timestamp = LocalDateTime.now();
 
         Post entityPost = Post.builder()
-                .member_id(member)
+                .memberId(id)
                 .content(posts.getContent())
-                .created_at(timestamp)
+                .createdAt(timestamp)
                 .build();
 
-        NewsFeed entityNewsFeed = NewsFeed.builder()
-                .post(entityPost)
-                .type(NewsFeedType.POST)
-                .timestamp(timestamp)
-                .sender(member)
-                .build();
-
-        postsRepository.save(entityPost);
-        newsFeedRepository.save(entityNewsFeed);
+        return postsRepository.save(entityPost);
     }
 }

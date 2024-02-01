@@ -1,4 +1,4 @@
-package com.stocktalkhub.stocktalkhub.dto;
+package com.stocktalkhub.stocktalkhub.dto.CommentDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

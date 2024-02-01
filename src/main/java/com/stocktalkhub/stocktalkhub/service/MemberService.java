@@ -61,7 +61,7 @@ public class MemberService {
         Member entityMember = Member.builder()
                 .password(encodedPassword)
                 .email(member.getEmail())
-                .profile_image(member.getProfile_image())
+                .profileImage(member.getProfile_image())
                 .introduce(member.getIntroduce())
                 .is_verified(true)
                 .build();

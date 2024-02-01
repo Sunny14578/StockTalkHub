@@ -1,6 +1,8 @@
 package com.stocktalkhub.stocktalkhub.controller;
 
-import com.stocktalkhub.stocktalkhub.dto.PostsDTO;
+import com.stocktalkhub.stocktalkhub.domain.Post;
+import com.stocktalkhub.stocktalkhub.dto.PostDTO.NewsFeedByPostsDTO;
+import com.stocktalkhub.stocktalkhub.dto.PostDTO.PostsDTO;
 import com.stocktalkhub.stocktalkhub.service.PostsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +22,10 @@ public class PostsApiController {
 
     @PostMapping("posts/{id}")
     public ResponseEntity postsCreate(@PathVariable Long id, @RequestBody PostsDTO posts) {
-        postsService.createPosts(id, posts);
-
+        Post post = postsService.createPosts(id, posts);
+//       뉴스피드에 보내야함
+        NewsFeedByPostsDTO nfBypDTO = new NewsFeedByPostsDTO(post.getId());
+        System.out.println(nfBypDTO.toString() + "포스트 생성");
         return ResponseEntity.status(HttpStatus.OK).body("포스트 생성 완료");
     }
 

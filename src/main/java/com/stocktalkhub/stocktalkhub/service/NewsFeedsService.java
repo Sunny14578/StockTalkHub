@@ -1,11 +1,8 @@
 package com.stocktalkhub.stocktalkhub.service;
 
-import com.stocktalkhub.stocktalkhub.domain.Member;
 import com.stocktalkhub.stocktalkhub.domain.NewsFeed;
 import com.stocktalkhub.stocktalkhub.domain.NewsFeedType;
-import com.stocktalkhub.stocktalkhub.dto.CommentDTO;
 import com.stocktalkhub.stocktalkhub.dto.MessageWithData;
-import com.stocktalkhub.stocktalkhub.dto.PostsDTO;
 import com.stocktalkhub.stocktalkhub.repository.FollowsRepository;
 import com.stocktalkhub.stocktalkhub.repository.NewsFeedRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +21,15 @@ public class NewsFeedsService {
 
     private final FollowsRepository followsRepository;
     private final NewsFeedRepository newsFeedRepository;
-    public List<MessageWithData> getFollowActivity(Long id) {
-        List<Long> following =  followsRepository.findFollowing(id).orElseThrow(() ->
-                new IllegalArgumentException("해당 팔로워가 존재하지 않습니다."));
+//    public List<MessageWithData> getFollowActivity(Long id) {
+//        List<Long> following =  followsRepository.findFollowing(id).orElseThrow(() ->
+//                new IllegalArgumentException("해당 팔로워가 존재하지 않습니다."));
+//         팔로워 들을 찾아와야함
+//        List<NewsFeed> newsFeeds = newsFeedRepository.findNewsFeedsBySenderIds(following).orElseThrow(() ->
+//                new IllegalArgumentException("해당 뉴스피드가 존재하지 않습니다."));
 
-        List<NewsFeed> newsFeeds = newsFeedRepository.findNewsFeedsBySenderIds(following).orElseThrow(() ->
-                new IllegalArgumentException("해당 뉴스피드가 존재하지 않습니다."));
-
-        return createNewsFeedMessages(newsFeeds);
-    }
+//        return createNewsFeedMessages(newsFeeds);
+//    }
 
     private List<MessageWithData> createNewsFeedMessages(List<NewsFeed> newsFeeds) {
         List<String> messages = new ArrayList<>();
@@ -51,27 +48,27 @@ public class NewsFeedsService {
     public MessageWithData createMessageWithData(NewsFeed newsFeed) {
         NewsFeedType type = newsFeed.getType();
         System.out.println(type + "=== ");
-        Member senderMember = newsFeed.getSender();
+        Long senderMember = newsFeed.getSenderId();
         System.out.println(senderMember + "123123=== ");
-        Member receiverMember = newsFeed.getReceiver();
+        Long receiverMember = newsFeed.getReceiverId();
         System.out.println(receiverMember + "456456=== ");
 
         String customMessage = null;
         MessageWithData messagesWithData = null;
-
-        if (type.equals(NewsFeedType.POST)) {
-            customMessage = senderMember.getName() + "님이 새로운 포스트를 공유했습니다.";
-            PostsDTO p = PostsDTO.builder()
-                    .content("확인해보자")
-                    .build();
-            CommentDTO c = new CommentDTO(1L, "sdfds");
-
-            messagesWithData = MessageWithData.builder()
-                    .message(customMessage)
-                    .post(p)
-                    .comment(c)
-                    .build();
-        }
+//        멤버 이름을 찾아와야함
+//        if (type.equals(NewsFeedType.POST)) {
+//            customMessage = senderMember.getName() + "님이 새로운 포스트를 공유했습니다.";
+//            PostsDTO p = PostsDTO.builder()
+//                    .content("확인해보자")
+//                    .build();
+//            CommentDTO c = new CommentDTO(1L, "sdfds");
+//
+//            messagesWithData = MessageWithData.builder()
+//                    .message(customMessage)
+//                    .post(p)
+//                    .comment(c)
+//                    .build();
+//        }
 //        } else if (type.equals(NewsFeedType.COMMENT)) {
 //            customMessage = senderMember.getName()  + "님이 " + receiverMember.getName() + "님의 글에 댓글을 남겼습니다.";
 //

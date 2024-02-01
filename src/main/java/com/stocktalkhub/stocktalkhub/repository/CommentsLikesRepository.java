@@ -10,8 +10,9 @@ import javax.persistence.EntityManager;
 @RequiredArgsConstructor
 public class CommentsLikesRepository {
     private final EntityManager em;
-    public void save(CommentLike commentLike){
+    public CommentLike save(CommentLike commentLike){
         em.persist(commentLike);
         System.out.print("성공");
+        return commentLike;
     }
 }
