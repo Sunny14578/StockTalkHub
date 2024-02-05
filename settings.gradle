@@ -1,3 +1,5 @@
 rootProject.name = 'stocktalkhub'
+include 'activity-module'
 include 'user-module'
+include 'newsfeed-module'
 
