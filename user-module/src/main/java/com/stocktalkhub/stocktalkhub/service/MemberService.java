@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -121,6 +123,10 @@ public class MemberService {
         if(!passwordEncoder.matches(memberPassword, loginPassword)){
             throw new PasswordMismatchException();
         }
+    }
+
+    public List<Member> findAllMembers() {
+        return memberRepository.findAll();
     }
 
     public class ExpiredAuthCodeException extends RuntimeException {

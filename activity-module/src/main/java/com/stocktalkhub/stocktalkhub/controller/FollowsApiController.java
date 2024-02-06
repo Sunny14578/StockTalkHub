@@ -6,6 +6,7 @@ import com.stocktalkhub.stocktalkhub.dto.FollowDTO.FollowsDTO;
 import com.stocktalkhub.stocktalkhub.dto.FollowDTO.NewsFeedByFollowsDTO;
 import com.stocktalkhub.stocktalkhub.feign.ActivityFeignClient;
 import com.stocktalkhub.stocktalkhub.service.FollowsService;
+import com.stocktalkhub.stocktalkhub.service.PostsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 public class FollowsApiController {
 
     private final FollowsService followsService;
+    private final PostsService postsService;
     private final ActivityFeignClient activityFeignClient;
 
 //    팔로우 생성 API
@@ -40,8 +42,17 @@ public class FollowsApiController {
     @GetMapping("follows/{id}/posts")
 //    public ResponseEntity followsGetPost(@AuthenticationPrincipal User user, @PathVariable Long id){
     public ResponseEntity followsGetPost(@PathVariable Long id){
-        List<Post> posts = followsService.FollowsPostGet(id);
+        List<Long> follows = followsService.findfollowing(id);
+        List<Post> posts = postsService.findAllPosts(follows);
 
         return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
+
+//     팔로잉들 가져오기
+    @GetMapping("follows/{id}")
+    public ResponseEntity getFollwings(@PathVariable Long id){
+        List<Long> follows = followsService.findfollowing(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(follows);
     }
 }

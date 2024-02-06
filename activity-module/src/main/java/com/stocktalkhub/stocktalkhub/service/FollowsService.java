@@ -1,7 +1,6 @@
 package com.stocktalkhub.stocktalkhub.service;
 
 import com.stocktalkhub.stocktalkhub.domain.Follow;
-import com.stocktalkhub.stocktalkhub.domain.Post;
 import com.stocktalkhub.stocktalkhub.repository.FollowsRepository;
 import com.stocktalkhub.stocktalkhub.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,10 +36,17 @@ public class FollowsService {
 
     }
 
-    public List<Post> FollowsPostGet(Long id) {
+//    public List<Post> FollowsPostGet(Long id) {
 //        Member follower = memberRepository.findOne(id).orElseThrow(() ->
 //                new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
 
-        return postsRepository.getFollowsPosts(id);
+//        return postsRepository.getFollowsPosts(id);
+//    }
+
+    public List<Long> findfollowing(Long id) {
+         List<Long> follows = followsRepository.findFollowing(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 팔로워가 존재하지 않습니다."));
+
+        return follows;
     }
 }

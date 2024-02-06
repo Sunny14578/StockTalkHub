@@ -39,4 +39,11 @@ public class PostsRepository {
         query.setParameter("memberId", memberId);
         return query.getResultList();
     }
+
+    public  List<Post> getFollowingsPosts(List<Long> followingIds){
+        String jpql = "SELECT p FROM Post p WHERE p.member.id IN :followingIds";
+        TypedQuery<Post> query = em.createQuery(jpql, Post.class);
+        query.setParameter("followingIds", followingIds);
+        return query.getResultList();
+    }
 }

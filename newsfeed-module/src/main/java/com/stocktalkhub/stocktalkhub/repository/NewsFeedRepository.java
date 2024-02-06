@@ -20,11 +20,11 @@ public class NewsFeedRepository {
         System.out.print("성공");
     }
 
-    public Optional<List<NewsFeed>> findNewsFeedsBySenderIds(List<Long> senderIds) {
+    public Optional<List<NewsFeed>> findNewsFeedsBySenderIds(List<Long> follwoingsIds) {
         String jpql = "SELECT nf FROM NewsFeed nf " +
-                "WHERE nf.sender.id IN :senderIds";
+                "WHERE nf.senderId IN :senderIds";
         TypedQuery<NewsFeed> query = em.createQuery(jpql, NewsFeed.class);
-        query.setParameter("senderIds", senderIds);
+        query.setParameter("senderIds", follwoingsIds);
         List<NewsFeed> newsFeeds = query.getResultList();
         return Optional.ofNullable(newsFeeds);
     }

@@ -16,7 +16,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -29,6 +31,7 @@ public class MemberApiController {
     private final JwtTokenService jwtTokenService;
     private final RedisService redisService;
     private final BCryptPasswordEncoder passwordEncoder;
+
 
 
     @PostMapping("members/login")
@@ -117,7 +120,7 @@ public class MemberApiController {
 
 
     // 업데이트
-    @PostMapping("members/{id}")
+    @PutMapping("members/{id}")
     public ResponseEntity update(@AuthenticationPrincipal User user, @RequestBody MemberDTO member,
                                  @PathVariable Long id){
         if (user.getId() != id){
@@ -127,6 +130,40 @@ public class MemberApiController {
         memberService.MemberInfoUpdate(id, member);
 
         return ResponseEntity.ok("업데이트에 성공하였습니다.");
+    }
+
+    // 멤버 객체 불러오기
+    @GetMapping("members/{id}")
+    public ResponseEntity findMember(@PathVariable Long id){
+
+        Member members = memberService.findById(id);
+        MemberDTO membersDTO = MemberDTO.builder()
+                .name(members.getName())
+                .introduce(members.getIntroduce())
+                .profile_image(members.getProfileImage())
+                .build();
+
+        return ResponseEntity.ok().body(membersDTO);
+    }
+
+    @GetMapping("members/")
+    public ResponseEntity findAllmembers(){
+        List<Member> members= memberService.findAllMembers();
+
+        List<MemberDTO> memberDTOs = new ArrayList<>();
+        for (Member member : members) {
+            System.out.println(member.getId() + "아이디나오니?");
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .id(member.getId())
+                    .profile_image(member.getProfileImage())
+                    .name(member.getName())
+                    .introduce(member.getIntroduce())
+                    .build();
+
+            memberDTOs.add(memberDTO);
+        }
+
+        return ResponseEntity.ok().body(memberDTOs);
     }
 
 

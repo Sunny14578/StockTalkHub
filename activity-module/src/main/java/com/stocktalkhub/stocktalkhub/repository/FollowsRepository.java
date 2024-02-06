@@ -21,7 +21,7 @@ public class FollowsRepository {
     }
 
     public Optional<List<Long>> findFollowing(Long followerId) {
-        String jpql = "SELECT f.following.id FROM Follow f WHERE f.follower.id = :followerId";
+        String jpql = "SELECT f.followingId FROM Follow f WHERE f.followerId = :followerId";
         TypedQuery<Long> query = em.createQuery(jpql, Long.class);
         query.setParameter("followerId", followerId);
         return Optional.ofNullable(query.getResultList());

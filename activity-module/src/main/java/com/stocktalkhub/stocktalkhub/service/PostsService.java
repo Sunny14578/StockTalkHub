@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -42,5 +43,13 @@ public class PostsService {
         Post post = postsRepository.findOne(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 포스트가 존재하지 않습니다."));
         return post;
+    }
+
+    @Transactional
+    public List<Post> findAllPosts(List<Long> followings){
+
+        List<Post> posts = postsRepository.getFollowingsPosts(followings);
+
+        return posts;
     }
 }

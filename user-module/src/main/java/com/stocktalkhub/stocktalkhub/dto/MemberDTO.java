@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO {
+    private Long id;
     private String password;
     private String email;
     private String auth;
@@ -15,7 +16,8 @@ public class MemberDTO {
     private String name;
 
     @Builder
-    public MemberDTO(String password, String introduce, String profile_image, String name) {
+    public MemberDTO(Long id, String password, String introduce, String profile_image, String name) {
+        this.id = id;
         this.password = password;
         this.introduce = introduce;
         this.profile_image = profile_image;

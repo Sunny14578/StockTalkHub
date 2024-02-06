@@ -40,4 +40,10 @@ public class MemberRepository {
     }
 
 
+    public List<Member> findAll() {
+        List<Member> resultList = em.createQuery("SELECT m FROM Member m", Member.class)
+                .getResultList();
+
+        return resultList;
+    }
 }
