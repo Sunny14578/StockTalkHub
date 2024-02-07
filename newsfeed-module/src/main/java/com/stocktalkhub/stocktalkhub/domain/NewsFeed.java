@@ -41,6 +41,7 @@ public class NewsFeed {
     @Column(name = "receiver_id")
     private Long receiverId;
 
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
 
     @Builder

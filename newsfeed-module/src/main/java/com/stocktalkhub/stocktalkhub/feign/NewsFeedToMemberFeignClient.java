@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "newsToMemberFeignClient", url = "http://localhost:8080")
+@FeignClient(name = "newsToMemberFeignClient", url = "http://localhost:8080/user-module")
 public interface NewsFeedToMemberFeignClient {
     @GetMapping("/members/{id}")
     ResponseEntity<String> findMembers(@PathVariable("id") Long id);

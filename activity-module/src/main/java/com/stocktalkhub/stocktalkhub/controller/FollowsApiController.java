@@ -18,6 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("activity-module/")
 public class FollowsApiController {
 
     private final FollowsService followsService;

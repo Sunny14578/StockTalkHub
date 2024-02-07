@@ -35,7 +35,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 // log.info("jwtTokenFilter 의 doFilterInternal() 실행 = 인증 필터");
 
 
-
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         System.out.print(header);
 //        System.out.print(header.startsWith("Bearer "));

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "newsToActivityFeignClient", url = "http://localhost:8081")
+@FeignClient(name = "newsToActivityFeignClient", url = "http://localhost:8081/activity-module")
 public interface NewsFeedToActivityFeignClient {
     @GetMapping("follows/{id}")
     ResponseEntity<List<Long>> getFollwings(@PathVariable("id") Long id);

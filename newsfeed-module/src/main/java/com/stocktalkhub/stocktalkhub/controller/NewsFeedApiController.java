@@ -21,6 +21,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("newsfeed-module/")
 public class NewsFeedApiController {
 
     private final NewsFeedsService newsFeedsService;

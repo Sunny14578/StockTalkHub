@@ -28,8 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/members/join", "/members/login", "/members/**",
-                        "/posts/**", "/comments/**", "/members/emailCheck").permitAll()
+                .antMatchers("/user-module/members/join", "/user-module/members/login",
+                        "/user-module/**").permitAll()
 
 //                .requestMatchers(AUTH_WHITELIST).permitAll()
 //                .antMatchers("/members/emailCheck").permitAll()

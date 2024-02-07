@@ -9,4 +9,5 @@ tasks.named('jar'){ // jar 설정은 끄기
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 }

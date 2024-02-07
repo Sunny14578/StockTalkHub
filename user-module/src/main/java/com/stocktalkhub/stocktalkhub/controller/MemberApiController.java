@@ -34,7 +34,7 @@ public class MemberApiController {
 
 
 
-    @PostMapping("members/login")
+    @PostMapping("/user-module/members/login")
     public ResponseEntity login(@RequestBody MemberDTO member) {
 
         try {
@@ -68,7 +68,7 @@ public class MemberApiController {
 //        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("members/emailCheck")
+    @PostMapping("/user-module/members/emailCheck")
     public ResponseEntity<String> emailCheck(@RequestBody MemberDTO member) {
         try{
             memberService.sendCodeToEmail(member);
@@ -85,7 +85,7 @@ public class MemberApiController {
         }
     }
 
-    @PostMapping("members/join")
+    @PostMapping("/user-module/members/join")
     public ResponseEntity<String> join(@RequestBody MemberDTO member){
 
         try {
@@ -110,7 +110,7 @@ public class MemberApiController {
     }
 
     // 로그아웃
-    @PostMapping("members/logouts")
+    @PostMapping("/user-module/members/logouts")
     public ResponseEntity logout(@AuthenticationPrincipal User user, @RequestBody TokenDTO tokenDTO){
 
         jwtTokenService.deleteRefreshToken(user);
@@ -120,7 +120,7 @@ public class MemberApiController {
 
 
     // 업데이트
-    @PutMapping("members/{id}")
+    @PutMapping("/user-module/members/{id}")
     public ResponseEntity update(@AuthenticationPrincipal User user, @RequestBody MemberDTO member,
                                  @PathVariable Long id){
         if (user.getId() != id){
@@ -133,7 +133,7 @@ public class MemberApiController {
     }
 
     // 멤버 객체 불러오기
-    @GetMapping("members/{id}")
+    @GetMapping("/user-module/members/{id}")
     public ResponseEntity findMember(@PathVariable Long id){
 
         Member members = memberService.findById(id);
@@ -146,7 +146,7 @@ public class MemberApiController {
         return ResponseEntity.ok().body(membersDTO);
     }
 
-    @GetMapping("members/")
+    @GetMapping("/user-module/members/")
     public ResponseEntity findAllmembers(){
         List<Member> members= memberService.findAllMembers();
 

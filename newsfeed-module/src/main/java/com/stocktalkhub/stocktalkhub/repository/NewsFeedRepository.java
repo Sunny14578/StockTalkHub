@@ -22,7 +22,8 @@ public class NewsFeedRepository {
 
     public Optional<List<NewsFeed>> findNewsFeedsBySenderIds(List<Long> follwoingsIds) {
         String jpql = "SELECT nf FROM NewsFeed nf " +
-                "WHERE nf.senderId IN :senderIds";
+                "WHERE nf.senderId IN :senderIds " +
+                "ORDER BY nf.timestamp DESC";
         TypedQuery<NewsFeed> query = em.createQuery(jpql, NewsFeed.class);
         query.setParameter("senderIds", follwoingsIds);
         List<NewsFeed> newsFeeds = query.getResultList();
