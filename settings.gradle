@@ -3,4 +3,5 @@ include 'activity-module'
 include 'user-module'
 include 'newsfeed-module'
 include 'apigateway-module'
+include 'stock-module'
 

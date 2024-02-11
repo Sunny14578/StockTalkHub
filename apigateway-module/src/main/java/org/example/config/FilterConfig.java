@@ -24,6 +24,9 @@ public class FilterConfig {
                 .route(r -> r.path("/user-module/members/emailCheck")
                         .uri("http://localhost:8080"))
 
+                .route(r -> r.path("/stock-module/**")
+                        .uri("http://localhost:8084"))
+
                 .route(r -> r.path("/user-module/**")
                                 .filters(f -> f.filter(customFilter.apply(new CustomFilter.Config(true, true))))
                                 .uri("http://localhost:8080"))
