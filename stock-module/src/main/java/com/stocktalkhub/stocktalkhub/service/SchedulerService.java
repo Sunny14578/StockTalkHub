@@ -16,13 +16,21 @@ public class SchedulerService {
 
     private final StocksService stocksService;
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000) // 5초마다 실행
-    public void myScheduledMethod() {
-        stocksService.stocksInsert();
+    public void myScheduledMethod() throws Exception {
+
+//        stocksService.stocksInsert();
         // 스케줄링될 작업 수행
+        System.out.println("하하하");
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        stocksService.getStocksPriceApi();
+//        stocksService.getStocksAPI(); // 첫 번째 메서드 실행
+//        stocksService.test();
         stopWatch.stop();
-        System.out.println(stopWatch.prettyPrint());
+        System.out.println("getStocksAPI 실행 시간: " + stopWatch.getLastTaskTimeMillis() + "ms");
+
+//        stopWatch.start();
+//        stocksService.getStocksPriceAPI(); // 두 번째 메서드 실행
+//        stopWatch.stop();
+//        System.out.println("getStocksPriceAPI 실행 시간: " + stopWatch.getLastTaskTimeMillis() + "ms");
     }
 }

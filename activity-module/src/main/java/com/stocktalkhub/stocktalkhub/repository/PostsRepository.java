@@ -46,4 +46,29 @@ public class PostsRepository {
         query.setParameter("followingIds", followingIds);
         return query.getResultList();
     }
+
+    public List<Post> getStocksPosts(Long id) {
+        String jpql = "SELECT p FROM Post p " +
+                "WHERE p.stockId = :stockId";
+        TypedQuery<Post> query = em.createQuery(jpql, Post.class);
+        query.setParameter("stockId", id);
+        return query.getResultList();
+    }
+
+    public List<Post> getStocksFilterPosts(Long filterId, String filter) {
+        String jpql = "SELECT p FROM Post p ";
+        System.out.println(filter + "제목뭐가오니");
+        if (filterId == 0) {
+            jpql += "WHERE p.title LIKE CONCAT('%', :filter, '%')";
+        } else if (filterId == 2) {
+            jpql += "WHERE p.content LIKE CONCAT('%', :filter, '%')";
+        } else {
+            throw new IllegalArgumentException("Invalid filterId: " + filterId);
+        }
+
+        TypedQuery<Post> query = em.createQuery(jpql, Post.class);
+        query.setParameter("filter", filter);
+
+        return query.getResultList();
+    }
 }

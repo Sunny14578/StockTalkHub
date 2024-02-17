@@ -9,16 +9,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostsDTO {
-    private Long member_id;
+    private Long memberId;
+    private String title;
     private String content;
-    private String media_file;
-    private LocalDateTime created_at;
+    private String mediaFile;
+    private Long stockId;
+    private LocalDateTime createdAt;
 
     @Builder
-    private PostsDTO(Long member_id, String content, LocalDateTime created_at) {
-        this.member_id = member_id;
+    private PostsDTO(String title, String content, String mediaFile, Long stockId, LocalDateTime createdAt) {
+        this.title = title;
         this.content = content;
-        this.created_at = created_at;
+        this.mediaFile = mediaFile;
+        this.stockId = stockId;
+        this.createdAt = createdAt;
     }
-
 }

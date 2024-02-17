@@ -129,6 +129,11 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public List<Member> findNameAllMembers(String name) {
+        List<Member> members = memberRepository.findByName(name);
+        return members;
+    }
+
     public class ExpiredAuthCodeException extends RuntimeException {
         public ExpiredAuthCodeException(String message) {
             super(message);

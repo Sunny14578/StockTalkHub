@@ -165,6 +165,26 @@ public class MemberApiController {
 
         return ResponseEntity.ok().body(memberDTOs);
     }
+    @PostMapping("/user-module/members/name")
+    public ResponseEntity findNameAllmembers(@RequestBody MemberDTO requestMemberDTO){
+        List<Member> members= memberService.findNameAllMembers(requestMemberDTO.getName());
+
+        List<MemberDTO> memberDTOs = new ArrayList<>();
+
+        for (Member member : members) {
+            System.out.println(member.getId() + "아이디나오니?");
+            MemberDTO memberDTO = MemberDTO.builder()
+                    .id(member.getId())
+                    .profile_image(member.getProfileImage())
+                    .name(member.getName())
+                    .introduce(member.getIntroduce())
+                    .build();
+
+            memberDTOs.add(memberDTO);
+    }
+
+        return ResponseEntity.ok().body(memberDTOs);
+}
 
 
 

@@ -8,20 +8,25 @@ server:
       force: true
 
 spring:
-
   spring:
     redis:
       host: 172.21.0.3
       port: 6379
 
+  batch:
+    job:
+      enabled: true
+      name: ${job.name:NONE}
+
   datasource:
+#    url: jdbc:postgresql://172.21.0.2:5432/postgre?currentSchema=stock
     url: jdbc:postgresql://localhost:5432/postgre?currentSchema=stock
     username: myuser
     password: mypassword
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         #        show_sql: true
@@ -34,3 +39,4 @@ jwt:
 logging:
   level:
     org.hibernate.SQL: debug
+

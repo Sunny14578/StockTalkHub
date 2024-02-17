@@ -2,6 +2,7 @@ package com.stocktalkhub.stocktalkhub.repository;
 
 import com.stocktalkhub.stocktalkhub.domain.Stock;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StocksRepository {
     private final EntityManager em;
+    private final JdbcTemplate jdbcTemplate;
 
     public void save(Stock stock) {
         em.persist(stock);
@@ -55,7 +57,15 @@ public class StocksRepository {
     }
 
 
+    public void saveAll(List<Stock> stockList) {
+        String sql = "INSERT INTO stocks (symbol, name, market_type) VALUES (?, ?, ?)";
 
+        jdbcTemplate.batchUpdate(sql, stockList, stockList.size(), (ps, stock) -> {
+            ps.setString(1, stock.getSymbol());
+            ps.setString(2, stock.getName());
+            ps.setString(3, stock.getMarketType().toString());
+        });
+    }
 }
 
 

@@ -12,4 +12,5 @@ import lombok.ToString;
 public class NewsFeedByPostsDTO {
     private Long id;
     private Long senderId;
+
 }

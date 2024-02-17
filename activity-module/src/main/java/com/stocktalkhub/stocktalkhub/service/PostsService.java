@@ -1,14 +1,18 @@
 package com.stocktalkhub.stocktalkhub.service;
 
 import com.stocktalkhub.stocktalkhub.domain.Post;
+import com.stocktalkhub.stocktalkhub.dto.MemberDTO.MemberByNameDTO;
 import com.stocktalkhub.stocktalkhub.dto.PostDTO.PostsDTO;
+import com.stocktalkhub.stocktalkhub.feign.MemberFeignClient;
 import com.stocktalkhub.stocktalkhub.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -17,20 +21,18 @@ import java.util.List;
 @Service
 public class PostsService {
     private final PostsRepository postsRepository;
-//    private final MemberRepository memberRepository;
-//    private final NewsFeedRepository newsFeedRepository;
+    private final MemberFeignClient memberFeignClient;
 
     @Transactional
     public Post createPosts(Long id, PostsDTO posts) {
-
-//        Member member = memberRepository.findOne(id).orElseThrow(() ->
-//                new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
 
         LocalDateTime timestamp = LocalDateTime.now();
 
         Post entityPost = Post.builder()
                 .memberId(id)
+                .title(posts.getTitle())
                 .content(posts.getContent())
+                .stockId(posts.getStockId())
                 .createdAt(timestamp)
                 .build();
 
@@ -50,6 +52,34 @@ public class PostsService {
 
         List<Post> posts = postsRepository.getFollowingsPosts(followings);
 
+        return posts;
+    }
+
+    public List<Post> findAll(Long id) {
+        List<Post> posts = postsRepository.getStocksPosts(id);
+        return posts;
+    }
+
+    public List<Post> findFilterAll(Long filterId, String filter) {
+
+        List<Post> posts = null;
+
+        if (filterId != 1L) {
+            posts = postsRepository.getStocksFilterPosts(filterId, filter);
+        }else{
+            MemberByNameDTO mfBynDTO = new MemberByNameDTO(filter);
+            ResponseEntity<String> response = memberFeignClient.getNameMembers(mfBynDTO);
+//            List<Map<String, Object>> responseBodyList = response.getBody();
+            List<Long> idList = new ArrayList<>();
+
+//            for (Map<String, Object> item : response) {
+//                Long id = (Long) item.get("id");
+//                idList.add(id);
+            }
+
+//            System.out.println(response.getBody() + "어떻게나올까");
+//            List<MemberDTO> members = convertResponseToMemberDTOList(response.getBody());
+//            posts = postsRepository.getStocksFilterIdPosts(filterId, filter);
         return posts;
     }
 }

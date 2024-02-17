@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,12 @@ public class MemberRepository {
                 .getResultList();
 
         return resultList;
+    }
+
+    public List<Member> findByName(String name) {
+        String jpql = "SELECT m FROM Member m WHERE m.name LIKE :namePrefix";
+        TypedQuery<Member> query = em.createQuery(jpql, Member.class);
+        query.setParameter("namePrefix", name + "%");
+        return query.getResultList();
     }
 }
