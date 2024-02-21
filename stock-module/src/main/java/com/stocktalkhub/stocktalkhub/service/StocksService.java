@@ -76,6 +76,21 @@ public class StocksService {
         return stocksPriceDTOs;
     }
 
+    public JSONArray getStockAPI(int i) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        // 종목코드를 바꿔가면서, 가지고올 주가 일수에 따라 URL 정의
+        String url = "https://m.stock.naver.com/api/stocks/marketValue/KOSPI?page=" + i + "&pageSize=100";
+
+        // JSON 형태로 데이터 가져오기
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        String jsonData = responseEntity.getBody();
+        JSONObject jsonObject = new JSONObject(jsonData);
+        JSONArray stocksArray = jsonObject.getJSONArray("stocks");
+
+        return stocksArray;
+    }
+
     public void getStocksAPI(){
         RestTemplate restTemplate = new RestTemplate();
 
@@ -92,17 +107,6 @@ public class StocksService {
             stockKospiInsertAll(stocksArray);
         }
 
-        for (int i = 1; i <= 22; i++){
-            // 종목코드를 바꿔가면서, 가지고올 주가 일수에 따라 URL 정의
-            String url =   "https://m.stock.naver.com/api/stocks/marketValue/KOSDAQ?page="+i+"&pageSize=100";
-
-            // JSON 형태로 데이터 가져오기
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-            String jsonData = responseEntity.getBody();
-            JSONObject jsonObject = new JSONObject(jsonData);
-            JSONArray stocksArray = jsonObject.getJSONArray("stocks");
-            stockKosdaqInsertAll(stocksArray);
-        }
     }
 
     public void stockKospiInsertAll(JSONArray jsonObject){
