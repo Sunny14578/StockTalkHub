@@ -1,4 +1,4 @@
-package com.stocktalkhub.stocktalkhub.config;
+package com.stocktalkhub.stocktalkhub.config.Stock;
 
 import com.stocktalkhub.stocktalkhub.domain.Stock;
 import com.stocktalkhub.stocktalkhub.domain.StockType;
@@ -18,7 +18,7 @@ public class StockProcessor implements ItemProcessor<JSONArray, List<Stock>> {
     @Override
     public List<Stock> process(JSONArray jsonArray) throws Exception {
         List<Stock> processedStocks = new ArrayList<>();
-        System.out.println("확인해보자");
+
         for (Object obj : jsonArray){
             JSONObject stockJson = (JSONObject) obj;
 

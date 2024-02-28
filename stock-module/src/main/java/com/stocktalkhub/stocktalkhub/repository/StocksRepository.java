@@ -58,6 +58,7 @@ public class StocksRepository {
 
 
     public void saveAll(List<Stock> stockList) {
+        System.out.println();
         String sql = "INSERT INTO stocks (symbol, name, market_type) VALUES (?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql, stockList, stockList.size(), (ps, stock) -> {

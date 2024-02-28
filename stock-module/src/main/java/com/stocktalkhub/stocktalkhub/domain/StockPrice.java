@@ -40,11 +40,28 @@ public class StockPrice {
     @Column(name = "fluctuation")
     private double fluctuation;
 
+    @Column(name = "moving_average_12")
+    private double movingAverage12;
+
+    @Column(name = "moving_average_20")
+    private double movingAverage20;
+
+    @Column(name = "moving_average_26")
+    private double movingAverage26;
+
+    @Column(name = "bollinger_upper_band")
+    private double bollingerUpperBand;
+
+    @Column(name = "bollinger_lower_band")
+    private double bollingerLowerBand;
+
     @Builder
     private StockPrice(Stock stock, LocalDate date,
                        double open, double high,
                        double low, double close,
-                       long volume, double fluctuation) {
+                       double movingAverage12, double movingAverage20, double movingAverage26,
+                       long volume, double fluctuation,
+                       double bollingerLowerBand, double bollingerUpperBand) {
         this.stock = stock;
         this.date = date;
         this.open = open;
@@ -52,6 +69,11 @@ public class StockPrice {
         this.low = low;
         this.close = close;
         this.volume = volume;
+        this.movingAverage12 = movingAverage12;
+        this.movingAverage20 = movingAverage20;
+        this.movingAverage26 = movingAverage26;
         this.fluctuation = fluctuation;
+        this.bollingerUpperBand = bollingerUpperBand;
+        this.bollingerLowerBand = bollingerLowerBand;
     }
 }

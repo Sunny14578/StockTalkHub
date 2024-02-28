@@ -20,8 +20,9 @@ public class StocksPriceRepository {
     private final EntityManager em;
 
     public void saveAll(List<StockPrice> stockPrices) {
-        String sql = "INSERT INTO stock_price (stock_id, date, open, high, low, close, volume, fluctuation) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO stock_price (stock_id, date, open, high, low, close, volume, fluctuation, moving_average_12, " +
+                "moving_average_20, moving_average_26, bollinger_upper_band, bollinger_lower_band) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql, stockPrices, stockPrices.size(), (ps, stockPrice) -> {
             ps.setLong(1, stockPrice.getStock().getId());
@@ -32,6 +33,11 @@ public class StocksPriceRepository {
             ps.setDouble(6, stockPrice.getClose());
             ps.setLong(7, stockPrice.getVolume());
             ps.setDouble(8, stockPrice.getFluctuation());
+            ps.setDouble(9, stockPrice.getMovingAverage12());
+            ps.setDouble(10, stockPrice.getMovingAverage20());
+            ps.setDouble(11, stockPrice.getMovingAverage26());
+            ps.setDouble(12, stockPrice.getBollingerUpperBand());
+            ps.setDouble(13, stockPrice.getBollingerLowerBand());
         });
     }
 
@@ -63,6 +69,5 @@ public class StocksPriceRepository {
         int size = resultList.size();
 
         return resultList.get(size - 1); // 리스트의 마지막 요소 가져오기
-
     }
 }

@@ -1,4 +1,4 @@
-package com.stocktalkhub.stocktalkhub.config;
+package com.stocktalkhub.stocktalkhub.config.Stock;
 
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;

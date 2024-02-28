@@ -11,6 +11,7 @@ import com.stocktalkhub.stocktalkhub.repository.StocksPriceRepository;
 import com.stocktalkhub.stocktalkhub.repository.StocksRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -76,7 +78,7 @@ public class StocksService {
         return stocksPriceDTOs;
     }
 
-    public JSONArray getStockAPI(int i) {
+    public JSONArray getStockKospiAPI(int i) {
         RestTemplate restTemplate = new RestTemplate();
 
         // 종목코드를 바꿔가면서, 가지고올 주가 일수에 따라 URL 정의
@@ -91,23 +93,21 @@ public class StocksService {
         return stocksArray;
     }
 
-    public void getStocksAPI(){
+    public JSONArray getStockKosdaqAPI(int i) {
         RestTemplate restTemplate = new RestTemplate();
 
-        for (int i = 1; i <= 22; i++){
+        // 종목코드를 바꿔가면서, 가지고올 주가 일수에 따라 URL 정의
+        String url = "https://m.stock.naver.com/api/stocks/marketValue/KOSDAQ?page=" + i + "&pageSize=100";
 
-            // 종목코드를 바꿔가면서, 가지고올 주가 일수에 따라 URL 정의
-            String url = "https://m.stock.naver.com/api/stocks/marketValue/KOSPI?page="+i+"&pageSize=100";
+        // JSON 형태로 데이터 가져오기
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        String jsonData = responseEntity.getBody();
+        JSONObject jsonObject = new JSONObject(jsonData);
+        JSONArray stocksArray = jsonObject.getJSONArray("stocks");
 
-            // JSON 형태로 데이터 가져오기
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-            String jsonData = responseEntity.getBody();
-            JSONObject jsonObject = new JSONObject(jsonData);
-            JSONArray stocksArray = jsonObject.getJSONArray("stocks");
-            stockKospiInsertAll(stocksArray);
-        }
-
+        return stocksArray;
     }
+
 
     public void stockKospiInsertAll(JSONArray jsonObject){
         List<Stock> stockList = new ArrayList<>();
@@ -155,6 +155,7 @@ public class StocksService {
         return jsonMapper.writeValueAsString(jsonNode);
     }
 
+
     public void getStocksPriceAPI() throws Exception {
         List<Stock> stocks = stocksRepository.findAll();
 
@@ -177,12 +178,14 @@ public class StocksService {
             String xmlData = responseEntity.getBody();
             String jsonData = convertXmlToJson(xmlData);
 
+
+
             extractValuesFromJson(jsonData, stock);
 //            stockPriceList.add(stockPrice);
         }
     }
 
-    public void extractValuesFromJson(String jsonData, Stock stock) throws Exception {
+    public List<StockPrice> extractValuesFromJson(String jsonData, Stock stock) throws Exception {
 
         List<StockPrice> stockPriceList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -191,76 +194,64 @@ public class StocksService {
         JsonNode chartdataNode = rootNode.get("chartdata");
 
         JsonNode itemNode = chartdataNode.get("item");
+//        System.out.println(stock.getName() + itemNode + "체크");
 
-        for (JsonNode item : itemNode){
-            String itemData = item.get("data").asText();
+        if (itemNode.isArray()){
+            for (JsonNode item : itemNode){
+                String itemData = item.get("data").asText();
 
-//            StockPrice stockPrice = stocksPriceInsertDay(itemData, stock, stockPriceList);
+                StockPrice stocksPrice = stockPriceBuild(stockPriceList, stock, itemData);
 
-            String[] data = itemData.split("\\|");
-
-            LocalDate date = LocalDate.parse(data[0], DateTimeFormatter.ofPattern("yyyyMMdd"));
-            double open = Double.parseDouble(data[1]);
-            double high = Double.parseDouble(data[2]);
-            double low = Double.parseDouble(data[3]);
-            double close = Double.parseDouble(data[4]);
-            long volume = Long.parseLong(data[5]);
-
-            double previousClose = stockPriceList.isEmpty() ? close : stockPriceList.get(stockPriceList.size() - 1).getClose();
-            double fluctuation = ((close - previousClose) / previousClose) * 100;
-
-            StockPrice stocksPrice = StockPrice.builder()
-                    .stock(stock)
-                    .date(date)
-                    .open(open)
-                    .high(high)
-                    .low(low)
-                    .close(close)
-                    .volume(volume)
-                    .fluctuation(fluctuation)
-                    .build();
-
+                stockPriceList.add(stocksPrice);
+            }
+        }else{
+            String itemData = itemNode.get("data").asText();
+            StockPrice stocksPrice = stockPriceBuild(stockPriceList, stock, itemData);
             stockPriceList.add(stocksPrice);
         }
 
-        stocksPriceRepository.saveAll(stockPriceList);
+        return stockPriceList;
+//        stocksPriceRepository.saveAll(stockPriceList);
     }
 
-//    public StockPrice stocksPriceInsertDay(String item, Stock stock, List<StockPrice> stockPriceList){
-//
-//
-//    }
+    public StockPrice stockPriceBuild(List<StockPrice> stockPriceList, Stock stock, String itemData){
 
-//        for (int i = 0; i < itemArray.length(); i++) {
-//            JSONObject item = itemArray.getJSONObject(i);
-//            String[] data = item.getString("data").split("\\|");
-//
-//            LocalDate date = LocalDate.parse(data[0], DateTimeFormatter.ofPattern("yyyyMMdd"));
-//            double open = Double.parseDouble(data[1]);
-//            double high = Double.parseDouble(data[2]);
-//            double low = Double.parseDouble(data[3]);
-//            double close = Double.parseDouble(data[4]);
-//            long volume = Long.parseLong(data[5]);
-//
-//            double previousClose = stockPrices.isEmpty() ? close : stockPrices.get(stockPrices.size() - 1).getClose();
-//            double fluctuation = ((close - previousClose) / previousClose) * 100;
-//
-//            StockPrice stocksPrice = StockPrice.builder()
-//                    .stock(stocks)
-//                    .date(date)
-//                    .open(open)
-//                    .high(high)
-//                    .low(low)
-//                    .close(close)
-//                    .volume(volume)
-//                    .fluctuation(fluctuation)
-//                    .build();
-//
-//            stockPrices.add(stocksPrice);
-//        }
+        String[] data = itemData.split("\\|");
 
-//        stocksPriceRepository.saveAll(stockPrices);
-//    }
+        LocalDate date = LocalDate.parse(data[0], DateTimeFormatter.ofPattern("yyyyMMdd"));
+        double open = Double.parseDouble(data[1]);
+        double high = Double.parseDouble(data[2]);
+        double low = Double.parseDouble(data[3]);
+        double close = Double.parseDouble(data[4]);
+        long volume = Long.parseLong(data[5]);
+
+        double previousClose = stockPriceList.isEmpty() ? close : stockPriceList.get(stockPriceList.size() - 1).getClose();
+        double fluctuation = ((close - previousClose) / previousClose) * 100;
+        double movingAverage12 = calculateMovingAverage(stockPriceList, 12);
+        double movingAverage20 = calculateMovingAverage(stockPriceList, 20);
+        double movingAverage26 = calculateMovingAverage(stockPriceList, 26);
+        double bollingerUpperBand = movingAverage20 + calculateStandard(stockPriceList) * 2;
+        double bollingerLowerBand = movingAverage20 - calculateStandard(stockPriceList) * 2;
+
+        StockPrice stocksPrice = StockPrice.builder()
+                .stock(stock)
+                .date(date)
+                .open(open)
+                .high(high)
+                .low(low)
+                .close(close)
+                .volume(volume)
+                .fluctuation(fluctuation)
+                .movingAverage12(movingAverage12)
+                .movingAverage20(movingAverage20)
+                .movingAverage26(movingAverage26)
+                .bollingerUpperBand(bollingerUpperBand)
+                .bollingerLowerBand(bollingerLowerBand)
+                .build();
+
+        return stocksPrice;
+    }
+
 
     public List<StockPriceDTO> getStocksPrice(String symbol, int days) {
 
@@ -287,4 +278,72 @@ public class StocksService {
 
         return stocksPriceDTO;
     }
+
+    public String getStocksPrice(Stock stock) throws Exception {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String count = "1235";
+
+        // 종목코드를 바꿔가면서, 가지고올 주가 일수에 따라 URL 정의
+        String url = "https://fchart.stock.naver.com/sise.nhn"
+                + "?symbol=" + stock.getSymbol()
+                + "&timeframe=day"
+                + "&count=" + count
+                + "&requestType=0";
+
+        // JSON 형태로 데이터 가져오기
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        String xmlData = responseEntity.getBody();
+        String jsonData = convertXmlToJson(xmlData);
+
+        return jsonData;
+    }
+
+    public double calculateMovingAverage(List<StockPrice> stockPriceList, int period){
+        ;
+        if (stockPriceList.size() < period){
+            return 0;
+        }else{
+
+            List<Double> closingPrices = getClosingPricesForPeriod(stockPriceList, period);
+
+            // 평균 계산
+            double sum = closingPrices.stream().mapToDouble(Double::doubleValue).sum();
+            return sum / period;
+        }
+    }
+
+    public double calculateStandard(List<StockPrice> stockPriceList){
+
+        if (stockPriceList.size() < 20){
+            return 0;
+        }else{
+            DescriptiveStatistics stats = new DescriptiveStatistics();
+
+            List<Double> closingPrices = getClosingPricesForPeriod(stockPriceList, 20);
+
+            for (Double value : closingPrices) {
+                stats.addValue(value);
+            }
+
+            return stats.getStandardDeviation();
+        }
+    }
+
+    public List<Double> getClosingPricesForPeriod(List<StockPrice> stockPriceList, int period){
+
+        List<Double> closingPrices = stockPriceList.subList(stockPriceList.size() - period, stockPriceList.size())
+                .stream()
+                .mapToDouble(StockPrice::getClose)
+                .boxed()
+                .collect(Collectors.toList());
+
+        return closingPrices;
+    }
+
+    public double calculateMACD(){
+        return 0;
+    }
+
+
 }

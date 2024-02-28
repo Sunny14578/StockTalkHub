@@ -1,4 +1,4 @@
-package com.stocktalkhub.stocktalkhub.config;
+package com.stocktalkhub.stocktalkhub.config.Stock;
 
 import com.stocktalkhub.stocktalkhub.service.StocksService;
 import lombok.RequiredArgsConstructor;
@@ -11,32 +11,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class StockListReader implements ItemReader<JSONArray> {
+public class StockKospiReader implements ItemReader<JSONArray> {
     private final StocksService stocksService;
     private int currentPage = 1;
 
     @Override
     public JSONArray read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
-        JSONArray response = stocksService.getStockAPI(currentPage);
-        System.out.println(response + "확인해보자");
+        JSONArray response = stocksService.getStockKospiAPI(currentPage);
+
         currentPage++;
         if (response == null || response.isEmpty()){
             return null;
         }
 
         return response;
-//        JSONArray response = null;
-//        System.out.println("리드시작");
-//        for (int i = 1; i <= 22; i++){
-//            response =  stocksService.getStockAPI(i);
-//
-//            if (response != null){
-//                return response;
-//            }else{
-//                return null;
-//            }
-//        }
-
     }
 }
