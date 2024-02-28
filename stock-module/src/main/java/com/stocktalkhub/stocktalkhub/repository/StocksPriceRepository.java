@@ -21,8 +21,8 @@ public class StocksPriceRepository {
 
     public void saveAll(List<StockPrice> stockPrices) {
         String sql = "INSERT INTO stock_price (stock_id, date, open, high, low, close, volume, fluctuation, moving_average_12, " +
-                "moving_average_20, moving_average_26, bollinger_upper_band, bollinger_lower_band) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "moving_average_20, moving_average_26, bollinger_upper_band, bollinger_lower_band, macd) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(sql, stockPrices, stockPrices.size(), (ps, stockPrice) -> {
             ps.setLong(1, stockPrice.getStock().getId());
@@ -38,6 +38,7 @@ public class StocksPriceRepository {
             ps.setDouble(11, stockPrice.getMovingAverage26());
             ps.setDouble(12, stockPrice.getBollingerUpperBand());
             ps.setDouble(13, stockPrice.getBollingerLowerBand());
+            ps.setDouble(14, stockPrice.getMacd());
         });
     }
 

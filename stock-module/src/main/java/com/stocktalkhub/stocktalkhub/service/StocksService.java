@@ -232,6 +232,7 @@ public class StocksService {
         double movingAverage26 = calculateMovingAverage(stockPriceList, 26);
         double bollingerUpperBand = movingAverage20 + calculateStandard(stockPriceList) * 2;
         double bollingerLowerBand = movingAverage20 - calculateStandard(stockPriceList) * 2;
+        double macd = calculateMACD(movingAverage26, movingAverage12);
 
         StockPrice stocksPrice = StockPrice.builder()
                 .stock(stock)
@@ -247,6 +248,7 @@ public class StocksService {
                 .movingAverage26(movingAverage26)
                 .bollingerUpperBand(bollingerUpperBand)
                 .bollingerLowerBand(bollingerLowerBand)
+                .macd(macd)
                 .build();
 
         return stocksPrice;
@@ -341,8 +343,12 @@ public class StocksService {
         return closingPrices;
     }
 
-    public double calculateMACD(){
-        return 0;
+    public double calculateMACD(double movingAverage26, double movingAverage12){
+        if (movingAverage26 != 0.0) {
+            return movingAverage12 - movingAverage26;
+        }else{
+            return 0.0;
+        }
     }
 
 
