@@ -1,5 +1,15 @@
 # 📊 네이버 주가 데이터를 활용한 주식 종목 토론방 서비스
 
+## 개발환경
+
+<ul>
+    <li> Docker 24.0.7 </li>
+    <li> Springboot(2.7.x) / Java 17</li>
+    <li> Postgres 16.1 </li>
+    <li> Jenkins 2.426 </li>
+</ul>
+
+
 ## 🛠️ 주요기능
 <details>
     <summary><strong>종목별 주가 정보 확인</strong></summary> 
