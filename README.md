@@ -66,7 +66,7 @@
     <summary>Structure</summary>
 
 <!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-![image](https://github.com/Sunny14578/StockTalkHub/assets/59717550/aa9ac37a-b033-48ba-a787-da2a342013c5)
+![image]()
 </details>
 
  
