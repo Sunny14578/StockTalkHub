@@ -77,3 +77,4 @@ docker-compose up -d
 
 
 ## 개발 요구사항
+[요구사항](https://github.com/Sunny14578/StockTalkHub/wiki/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EB%AA%85%EC%84%B8%EC%84%9C)
