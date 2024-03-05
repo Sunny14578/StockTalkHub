@@ -1,22 +1,16 @@
 # 📊 네이버 주가 데이터를 활용한 주식 종목 토론방 서비스
 
-* [1. 개발환경](#-하이)
-* [2 .주요기능](#개발환경)
-* [🏛️ ERD & Structure](#----erd---structure)
-* [🚀 도커 컴포즈 명령어](#-------------)
-* [개발 요구사항](#-------)
+* [주요기능](#-하이)
+* [트러블슈팅](#-트러블슈팅)
+* [개발환경](#-개발환경)
+* [설계](#-설계)
+* [실행방법](#-실행방법)
+* [개발 요구사항](#개발-요구사항)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
-## 🏠 하이
-## 🏠 개발환경
 
-<ul>
-    <li> Docker 24.0.7 </li>
-    <li> Springboot(2.7.x) / Java 17</li>
-    <li> Postgres 16.1 </li>
-    <li> Jenkins 2.426 </li>
-</ul>
+
 
 ## 🛠️ 주요기능
 <details>
@@ -60,9 +54,16 @@
 
 
 
+## 🏠 개발환경
 
+<ul>
+    <li> Docker 24.0.7 </li>
+    <li> Springboot(2.7.x) / Java 17</li>
+    <li> Postgres 16.1 </li>
+    <li> Jenkins 2.426 </li>
+</ul>
 
-## 🏛️ ERD & Structure
+## 🏛️ 설계
 <details>
     <summary>ERD</summary>
 
@@ -77,10 +78,11 @@
 ![image]()
 </details>
 
+
  
 
 
-## 🚀 도커 컴포즈 명령어
+## 🚀 실행방법
 docker-compose up -d
 
 
