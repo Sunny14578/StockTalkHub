@@ -1,5 +1,14 @@
 # 📊 네이버 주가 데이터를 활용한 주식 종목 토론방 서비스
 
+* [1. 개발환경](#하이)
+* [2 .주요기능](#--------)
+* [🏛️ ERD & Structure](#----erd---structure)
+* [🚀 도커 컴포즈 명령어](#-------------)
+* [개발 요구사항](#-------)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+##하이
 ## 🏠 개발환경
 
 <ul>
@@ -8,7 +17,6 @@
     <li> Postgres 16.1 </li>
     <li> Jenkins 2.426 </li>
 </ul>
-
 
 ## 🛠️ 주요기능
 <details>
