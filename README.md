@@ -41,7 +41,11 @@
     </ul>
 </details>
 
+<br><br>
 
+## 💥 트러블슈팅
+
+<br><br>
 
 ## 🏠 개발환경
 
@@ -52,7 +56,9 @@
     <li> Jenkins 2.426 </li>
 </ul>
 
-## 🏛️ 설계
+<br><br>
+
+## 🏛 설계
 
 <details>
     <summary>ERD</summary>
@@ -70,11 +76,12 @@
 
 
  
-
+<br><br>
 
 ## 🚀 실행방법
 docker-compose up -d
 
+<br><br>
 
 ## 개발 요구사항
 [요구사항](https://github.com/Sunny14578/StockTalkHub/wiki/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EB%AA%85%EC%84%B8%EC%84%9C)
