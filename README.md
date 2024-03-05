@@ -13,7 +13,7 @@
 
 <br><br>
 
-## 🛠️ 주요기능
+## ⚒ 주요기능
 
 <details>
     <summary><strong>종목별 주가 정보 확인</strong></summary> 
