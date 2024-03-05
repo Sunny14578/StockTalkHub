@@ -1,13 +1,13 @@
 # 📊 네이버 주가 데이터를 활용한 주식 종목 토론방 서비스
 
-* [주요기능](#-하이)
+## 목차
+* [주요기능](#-주요기능)
 * [트러블슈팅](#-트러블슈팅)
 * [개발환경](#-개발환경)
 * [설계](#-설계)
 * [실행방법](#-실행방법)
 * [개발 요구사항](#개발-요구사항)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 
 
@@ -64,6 +64,7 @@
 </ul>
 
 ## 🏛️ 설계
+
 <details>
     <summary>ERD</summary>
 
