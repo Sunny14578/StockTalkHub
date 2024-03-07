@@ -1,5 +1,13 @@
-version: '2'
+version: '3'
 services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name : jenkins
+    volumes:
+      - ./jenkins:/var/jenkins_home
+    ports:
+      - '8088:8080'
+
   postgres:
     image: 'postgres:latest'
     container_name: 'my_postgres'
@@ -7,6 +15,7 @@ services:
       - 'POSTGRES_DB=postgre'
       - 'POSTGRES_USER=myuser'
       - 'POSTGRES_PASSWORD=mypassword'
+
     ports:
       - '5432:5432'
   redis:

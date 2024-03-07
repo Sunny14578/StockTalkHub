@@ -1,0 +1,16 @@
+dependencies {
+//    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+}
+
+tasks.named('bootJar'){ // bootJar 세팅을 켜기
+    enabled = true
+}
+
+jar {
+    enabled = false
+}
+

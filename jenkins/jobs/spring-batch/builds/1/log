@@ -1,0 +1,7 @@
+Started by user [8mha:////4OLh5F5mHrvFScwGPaDNuUDTtMrIa3E1LlMEPNcyMP6yAAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzmEgZe/dLi1CL9ksTUSqAxAEwfUyXCAAAA[0m최태양
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/spring-batch
+[spring-batch] $ /bin/sh -xe /tmp/jenkins4393986598552873594.sh
++ echo /var/jenkins_home/workspace/spring-batch
+/var/jenkins_home/workspace/spring-batch
+Finished: SUCCESS
