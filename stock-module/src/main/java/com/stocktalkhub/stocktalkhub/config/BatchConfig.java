@@ -89,14 +89,14 @@ public class BatchConfig {
                 .build();
     }
 
-    @Bean
-    public Step stepEvaluateSupplementaryMetrics(){
-        return stepBuilderFactory.get("step")
-                .<StockInfoDTO, List<StockPrice>>chunk(100)
-                .reader(stockPriceReader)
-                .processor(stockPriceProcessor)
-                .writer(stockPriceWriter)
-                .taskExecutor(new SimpleAsyncTaskExecutor())
-                .build();
-    }
+//    @Bean
+//    public Step stepEvaluateSupplementaryMetrics(){
+//        return stepBuilderFactory.get("step")
+//                .<StockInfoDTO, List<StockPrice>>chunk(100)
+//                .reader(stockPriceReader)
+//                .processor(stockPriceProcessor)
+//                .writer(stockPriceWriter)
+//                .taskExecutor(new SimpleAsyncTaskExecutor())
+//                .build();
+//    }
 }

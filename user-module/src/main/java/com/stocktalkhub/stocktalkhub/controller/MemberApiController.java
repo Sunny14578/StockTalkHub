@@ -32,8 +32,6 @@ public class MemberApiController {
     private final RedisService redisService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-
-
     @PostMapping("/user-module/members/login")
     public ResponseEntity login(@RequestBody MemberDTO member) {
 

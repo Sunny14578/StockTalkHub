@@ -30,9 +30,9 @@ public class StockPriceReader implements ItemReader<StockInfoDTO> {
     public void beforeStep(StepExecution stepExecution) {
         List<Stock> stocks = stocksRepository.findAll();
 
-        Stock selectedStock = stocks.get(0); // 첫 번째 요소 선택
-        stocks.clear(); // 모든 요소 삭제
-        stocks.add(selectedStock);
+//        Stock selectedStock = stocks.get(0); // 첫 번째 요소 선택
+//        stocks.clear(); // 모든 요소 삭제
+//        stocks.add(selectedStock);
 
         this.stockIterator = stocks.iterator();
     }

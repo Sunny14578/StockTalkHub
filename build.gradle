@@ -81,6 +81,13 @@ subprojects {
 		runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
 		implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+		// swagger
+		implementation "io.springfox:springfox-boot-starter:3.0.0"
+		implementation "io.springfox:springfox-swagger-ui:3.0.0"
+
+
+
 	}
 }
 
