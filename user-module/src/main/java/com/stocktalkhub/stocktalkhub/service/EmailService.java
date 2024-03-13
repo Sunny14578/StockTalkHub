@@ -27,13 +27,10 @@ public class EmailService {
 
         simpleMailMessage.setText("인증번호 : " + verificationCode);
 
-        try{
-            javaMailSender.send(simpleMailMessage);
-            redisService.setValues(email, verificationCode);
-        } catch (Exception e){
-            e.printStackTrace();
-            return msg;
-        }
+
+        javaMailSender.send(simpleMailMessage);
+        redisService.setValues(email, verificationCode);
+
         return true;
     }
 

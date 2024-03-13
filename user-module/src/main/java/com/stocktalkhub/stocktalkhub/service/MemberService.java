@@ -2,6 +2,8 @@ package com.stocktalkhub.stocktalkhub.service;
 
 import com.stocktalkhub.stocktalkhub.domain.Member;
 import com.stocktalkhub.stocktalkhub.dto.MemberDTO;
+import com.stocktalkhub.stocktalkhub.dto.EmailDTO;
+import com.stocktalkhub.stocktalkhub.exception.EmailException;
 import com.stocktalkhub.stocktalkhub.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +47,16 @@ public class MemberService {
 
 
     // 이메일 인증코드 전송
-    public void sendCodeToEmail(MemberDTO member) throws Exception {
-        String userEmail = member.getEmail();
+    public void sendCodeToEmail(EmailDTO responseDTO) throws Exception {
+        String userEmail = responseDTO.getEmail();
         this.validateDuplicateMember(userEmail);
-        emailService.sendMailReject(userEmail);
+
+        try {
+            emailService.sendMailReject(userEmail);
+        } catch (Exception e){
+            throw new EmailException("유효하지 않은 이메일 입니다.");
+        }
+
         String Authcode = redisService.getValues(userEmail);
     }
 
@@ -79,8 +87,9 @@ public class MemberService {
         Member findMember = memberRepository.findByEmail(email);
         /*  */
         if (findMember != null) {
-            throw new EmailAlreadyExistsException(email);
+            throw new EmailException("이미 존재하는 이메일 주소입니다");
         }
+
     }
 
     // 인증코드 일치 체크
