@@ -3,6 +3,7 @@ package com.stocktalkhub.stocktalkhub.dto;
 import lombok.*;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,9 +16,12 @@ public class MemberDTO {
     private String introduce;
     private String name;
 
+
+
     @Builder
-    public MemberDTO(Long id, String password, String introduce, String profile_image, String name) {
+    public MemberDTO(Long id, String email, String password, String introduce, String profile_image, String name) {
         this.id = id;
+        this.email = email;
         this.password = password;
         this.introduce = introduce;
         this.profile_image = profile_image;

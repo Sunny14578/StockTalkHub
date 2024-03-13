@@ -3,11 +3,14 @@ package com.stocktalkhub.stocktalkhub.controller;
 import com.stocktalkhub.stocktalkhub.domain.Member;
 import com.stocktalkhub.stocktalkhub.dto.MemberDTO;
 import com.stocktalkhub.stocktalkhub.dto.TokenDTO;
+import com.stocktalkhub.stocktalkhub.dto.EmailDTO;
+import com.stocktalkhub.stocktalkhub.exception.EmailException;
 import com.stocktalkhub.stocktalkhub.security.jwt.util.JwtTokenizer;
 import com.stocktalkhub.stocktalkhub.security.jwt.util.User;
 import com.stocktalkhub.stocktalkhub.service.JwtTokenService;
 import com.stocktalkhub.stocktalkhub.service.MemberService;
 import com.stocktalkhub.stocktalkhub.service.RedisService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -67,17 +70,16 @@ public class MemberApiController {
     }
 
     @PostMapping("/user-module/members/emailCheck")
-    public ResponseEntity<String> emailCheck(@RequestBody MemberDTO member) {
+    @ApiOperation(value = "이메일 인증", notes = "이메일 주소를 기입하여 인증 절차를 진행합니다. gmail 만 가능합니다.")
+    public ResponseEntity<String> emailCheck(@RequestBody EmailDTO responseDTO) {
         try{
-            memberService.sendCodeToEmail(member);
+            memberService.sendCodeToEmail(responseDTO);
 
             String message = "의 메일로 인증번호가 전송되었습니다.";
-            String response = "{\"message\": \"" +member.getEmail() + message + "\"}";
+            String response = "{\"message\": \"" +responseDTO.getEmail() + message + "\"}";
             return ResponseEntity.ok(response);
-        } catch (MemberService.EmailAlreadyExistsException e){
-
-//            이미 존재하는 이메일 처리
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 이메일입니다.");
+        } catch (EmailException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
