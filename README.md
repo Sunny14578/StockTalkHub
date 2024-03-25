@@ -61,17 +61,19 @@
 ## 🏛 설계
 
 <details>
-    <summary>ERD</summary>
+    <summary>아키텍처</summary>
 
-<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-![image](https://github.com/Sunny14578/StockTalkHub/assets/59717550/aa9ac37a-b033-48ba-a787-da2a342013c5)
+![image](https://github.com/Sunny14578/StockTalkHub/assets/59717550/05a7550d-a854-42a5-8cb5-29c5de1efd98)
+
+
+
+    
 </details>
 
 <details>
-    <summary>Structure</summary>
+    <summary>ERD</summary>
 
-<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-![image]()
+![image](https://github.com/Sunny14578/StockTalkHub/assets/59717550/aa9ac37a-b033-48ba-a787-da2a342013c5)
 </details>
 
 
